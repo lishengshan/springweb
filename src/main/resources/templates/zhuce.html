@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title></title>
+</head>
+<body>
+	<div>
+		<form action="adduser" id="myform" method="post">
+			<table>
+				<tr>
+					<td>姓名</td>
+					<td><input type="text" name="name" id="name" /></td>
+				</tr>
+				<tr>
+					<td>年龄</td>
+					<td><input type="text" name="age" id="age" /></td>
+				</tr>
+				<tr>
+					<td>手机号码</td>
+					<td><input type="text" name="tel" id="tel" /></td>
+				</tr>
+			</table>
+			<input type="button" value="提交" id="tijiao" />
+		</form>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script>
+			$(document).ready(function(){
+				$("#tijiao").click(function(){
+					var name=$("#name").val();
+					var age=$("#age").val();
+					var tel=$("#tel").val();
+					
+					var bool=true;
+					if(name==null||name==""){
+						alert("名字输入有误，请重新输入");
+						bool= false;
+					}
+					if(isNaN(age)||age==null||age==""){
+						alert("年龄输入有误，请重新输入");
+						bool=false;
+					}
+					if(!(/^1[34578]\d{9}$/.test(tel))){
+						alert("电话号码输入有误，请重新输入");
+						bool=false;
+						}
+					if(bool){
+						//zhucetijiao();
+						alert("1");
+						$("#myform").submit();
+					}
+				});
+				//提交注册内容
+				function zhucetijiao(){
+					$.ajax({
+						type:"post",
+						url:"adduser",
+						async:true,
+						data:$("#myform").serialize(),
+						dataType:'text',
+					    beforeSend:function(data){
+				          //提交之前的函数运行， 状态值是4之前
+				          alert(data);
+				        },
+				 		success: function(data) {
+				 				location="tiaosuccess";
+						},
+				 		error: function(msg){
+				 			alert("error");
+				 		}
+					});
+				}
+				
+			})
+	</script>
+</body>
+</html>
